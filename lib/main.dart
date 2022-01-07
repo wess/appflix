@@ -39,7 +39,10 @@ class Main extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const OnboardingScreen(),
+      home: FutureBuilder(
+        future: context.read<AccountProvider>().isValid(),
+        builder: (context, snapshot) => context.watch<AccountProvider>().session == null ? const OnboardingScreen() : const NavScreen(),
+      )
     );
   }
 }
