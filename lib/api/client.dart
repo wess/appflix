@@ -16,10 +16,10 @@ class ApiClient {
     Client client = Client();
 
     client
-    .setEndpoint('https://dbdemos.appwrite.org/v1')
-    .setProject('almostNetflix')
+    .setEndpoint('https://demo.appwrite.io/v1')
+    .setProject('almostNetflix2')
     .setSelfSigned();
-
+    
     return client;
   }
 

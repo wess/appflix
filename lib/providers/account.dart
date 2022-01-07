@@ -18,8 +18,19 @@ class AccountProvider extends ChangeNotifier {
   User? get current => _current;
 
   Future<void> register(String email, String password, String? name) async {
-    var result = await ApiClient.account.create(email: email, password: password, name: name);
+    final result = await ApiClient.account.create(
+      userId: 'unique()',
+      email: email, 
+      password: password, 
+      name: name
+    );
 
-    print("Account Result: ${result}");
+    print("Account Result: $result");
+  }
+
+  Future<void> login(String email, String password) async {
+    final result = await ApiClient.account.createSession(email: email, password: password);
+
+    print("Account Result: $result");
   }
 }
