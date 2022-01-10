@@ -29,7 +29,7 @@ class AccountProvider extends ChangeNotifier {
       return null;
     }
 
-    return json.decode(cached);
+    return Session.fromMap(json.decode(cached));
   }
 
   Future<bool> isValid() async {
@@ -47,14 +47,20 @@ class AccountProvider extends ChangeNotifier {
   }
 
   Future<void> register(String email, String password, String? name) async {
-    final result = await ApiClient.account.create(
-      userId: 'unique()',
-      email: email, 
-      password: password, 
-      name: name
-    );
+    try {
+      final result = await ApiClient.account.create(
+        userId: 'unique()',
+        email: email, 
+        password: password, 
+        name: name
+      );
 
-    print("Account Result: $result");
+      _current = result;
+
+      notifyListeners();
+    } catch(_e) {
+      throw Exception("Failed to register");
+    }
   }
 
   Future<void> login(String email, String password) async {
@@ -62,12 +68,12 @@ class AccountProvider extends ChangeNotifier {
       final result = await ApiClient.account.createSession(email: email, password: password);
       _session = result;
 
-      Store.set("session", json.encode(result));
-    } catch(_) {
+      Store.set("session", json.encode(result.toMap()));
+
+      notifyListeners();
+    } catch(e) {
       _session = null;
     }
-
-    notifyListeners();
   }
 
 }

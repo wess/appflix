@@ -9,6 +9,7 @@
 //
 
 import 'package:appflix/providers/account.dart';
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -251,6 +252,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+
+    final current = context.watch<AccountProvider>().current;
+
+    _emailController.text = current?.email ?? "";
 
     return Scaffold(
       extendBodyBehindAppBar: true,
