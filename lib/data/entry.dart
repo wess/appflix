@@ -9,6 +9,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:appflix/extensions/datetime.dart';
 
 class Entry {
   final String id;
@@ -21,7 +22,7 @@ class Entry {
   final String tags;
   final DateTime? netflixReleaseDate;
   final DateTime? releaseDate;
-  final int trendingIndex;
+  final double trendingIndex;
   final bool isOriginal;
   final String cast;
 
@@ -55,7 +56,7 @@ class Entry {
       name: '',
       description: '',
       ageRestriction: '',
-      durationMinutes: Duration(minutes: -1),
+      durationMinutes: const Duration(minutes: -1),
       thumbnailImageId: '',
       genres: '',
       tags: '',
@@ -75,8 +76,8 @@ class Entry {
       thumbnailImageId: data['thumbnailImageId'],
       genres: data['genres'],
       tags: data['tags'],
-      netflixReleaseDate: data['netflixReleaseDate'] != null ? DateTime.parse(data['netflixReleaseDate']) : null,
-      releaseDate: data['releaseDate'] != null ? DateTime.parse(data['releaseDate']) : null,
+      netflixReleaseDate: data['netflixReleaseDate'] != null ? DateTimeExt.fromUnixTimestampInt(data['netflixReleaseDate']) : null,
+      releaseDate: data['releaseDate'] != null ? DateTimeExt.fromUnixTimestampInt(data['releaseDate']) : null,
       trendingIndex: data['trendingIndex'],
       isOriginal: data['isOriginal'],
       cast: data['cast'],

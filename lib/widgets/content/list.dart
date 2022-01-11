@@ -54,10 +54,10 @@ class ContentList extends StatelessWidget {
                   width: isOriginal ? 250 : 170,
                   margin:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(current.thumbnailImageId), fit: BoxFit.cover),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   image: DecorationImage(
+                  //       image: AssetImage(current.thumbnailImageId), fit: BoxFit.cover),
+                  // ),
                 ),
               );
             },

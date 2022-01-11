@@ -8,11 +8,15 @@
 // Copywrite (c) 2022 Wess.io
 //
 
+import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:appflix/api/client.dart';
 import 'package:appflix/data/entry.dart';
 import 'package:flutter/material.dart';
 
 class EntryProvider extends ChangeNotifier {
+  
   static String _collectionId = "movies";
 
   Entry _featured = Entry.empty();
@@ -32,8 +36,15 @@ class EntryProvider extends ChangeNotifier {
   }
 
   Future<void> list() async {
-    //var result = await ApiClient.database.listDocuments(collectionId: _collectionId);
+    var result = await ApiClient.database.listDocuments(collectionId: _collectionId);
 
-    //print("Results: ${result}");
+    _entries = result.documents.map((document) => Entry.fromJson(document.data)).toList();
+    _featured = _entries.isEmpty ? Entry.empty() : _entries[0];
+
+    notifyListeners();
+  }
+
+  Future<Uint8List> imageFor(Entry entry) async {
+    return await ApiClient.storage.getFileView(fileId: entry.thumbnailImageId);
   }
 }
